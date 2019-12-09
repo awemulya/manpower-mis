@@ -5,12 +5,14 @@ services:
     image: postgres
     volumes:
       - ../postgres_data_manpower:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8001
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
-      - "8001:8001"
+      - "8000:8001"
     depends_on:
       - db
