@@ -35,6 +35,11 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
+              {% if messages %}
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+              {% endif %}
               <form role="form" action="{% url 'new-passport' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">

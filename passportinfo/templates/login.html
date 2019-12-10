@@ -9,6 +9,9 @@
 {% block nav %}
 {% endblock %}
 {% block content %}
+{% if error_message %}
+  {{error_message}}
+{% endif %}
 <div class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">

@@ -1,12 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .forms import PassportForm
+from django.contrib import messages
 
+@login_required
 def passport_new(request):
-    form = PassportForm
+    if request.method == 'POST':
+        form = PassportForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'One Information Successfully Added')
+            return redirect(' ')
+    else:
+        form = PassportForm()
+
     return render(request, 'new_passport.html', {'form':form})
 
 
