@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+{% if user.is_authenticated %}
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -40,7 +40,7 @@
                     {{message}}
                 {% endfor %}
               {% endif %}
-              <form role="form" action="{% url 'new-passport' %}" method="POST" enctype="multipart/form-data">
+              <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
                     <div class="form-row">
@@ -60,6 +60,11 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.reference|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
                             <div class="form-group col-md-6 mb-0">
                                 {{ form.pp_photo|as_crispy_field }}
                             </div>
@@ -73,7 +78,7 @@
                                     {{ form.working_certificate|as_crispy_field }}
                                 </div>
                         </div>
-                        {{form.entry_date | as_crispy_field}}
+                              {{form.entry_date | as_crispy_field}}
                                   
                     {{ form.status | as_crispy_field }}
                 </div>
@@ -108,6 +113,15 @@
 $(document).ready(function () {
   bsCustomFileInput.init();
 });
+$(function () {
+    $("#datetimepicker1").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
 </script>
 </div>
+{% else %}
+<meta http-equiv="refresh"
+      content="0; url = http://127.0.0.1:8000/login" /> 
+{% endif %}
 {% endblock %}

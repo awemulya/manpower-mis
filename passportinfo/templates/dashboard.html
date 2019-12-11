@@ -19,7 +19,7 @@
   {% block links %}
   {% endblock %}
 </head>
-
+{% if user.is_authenticated %}
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 {% block nav %}
 <div class="wrapper">
@@ -31,7 +31,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -108,7 +108,7 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="{% url 'info-view' %}" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Tables
@@ -122,8 +122,16 @@
     <!-- /.sidebar -->
   </aside>
   {% endblock %}
+{% endif %}
+
   {% block content %}
   <!-- Content Wrapper. Contains page content -->
+  {% if messages %}
+    {% for message in messages %}
+      <p color="green">{{message}}</p>
+    {% endfor %}
+  {% endif %}
+  {% if user.is_authenticated %}
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -980,6 +988,10 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
+  {% else %}
+  <meta http-equiv="refresh"
+        content="0; url = http://127.0.0.1:8000/login" /> 
+  {% endif %}
   {% endblock %}
 
   <!-- Main Footer -->
@@ -993,6 +1005,7 @@
 </div>
 <!-- ./wrapper -->
 {% block script %}
+
 {% endblock %}
 
 <!-- REQUIRED SCRIPTS -->

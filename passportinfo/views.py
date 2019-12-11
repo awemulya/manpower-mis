@@ -5,18 +5,18 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .forms import PassportForm
 from django.contrib import messages
+from django.views.generic import ListView
+from .models import PassportInfo
 
-@login_required
 def passport_new(request):
     if request.method == 'POST':
         form = PassportForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'One Information Successfully Added')
-            return redirect(' ')
+            return redirect('/dashboard')
     else:
         form = PassportForm()
-
     return render(request, 'new_passport.html', {'form':form})
 
 
@@ -28,7 +28,7 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'dashboard.html')
+                return render(request, 'dashboard.html', {'messages':messages})
             else:
                 return render(request, 'login.html', {'error_message':'You account is not active'})
 
@@ -37,6 +37,11 @@ def user_login(request):
 
     return render(request, 'login.html')
 
-@login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+class InfoListView(ListView):
+    model = PassportInfo
+    template_name = 'info.html'
+    context_object_name = 'passportinfos'
