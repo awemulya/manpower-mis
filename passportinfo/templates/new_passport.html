@@ -44,11 +44,14 @@
                 {% csrf_token %}
                 <div class="card-body">
                     <div class="form-row">
-                        <div class="form-group col-md-6 mb-0">
+                        <div class="form-group col-md-4 mb-0">
                           {{ form.name|as_crispy_field }}
                         </div>
-                        <div class="form-group col-md-6 mb-0">
+                        <div class="form-group col-md-4 mb-0">
                           {{ form.passport_no|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                          {{ form.reference|as_crispy_field }}
                         </div>
                     </div>
                     <div class="form-row">
