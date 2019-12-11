@@ -13,7 +13,11 @@ def passport_new(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'One Information Successfully Added')
-            return redirect(' ')
+            return redirect('dashboard')
+        else:
+            print("error", form.errors)
+            messages.error(request, 'One Information Add Failed')
+
     else:
         form = PassportForm()
 
